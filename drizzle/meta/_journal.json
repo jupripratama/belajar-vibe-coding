@@ -15,6 +15,13 @@
       "when": 1788004302366,
       "tag": "0001_add_password_remove_updated_at",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1788006204697,
+      "tag": "0002_add_sessions_table",
+      "breakpoints": true
     }
   ]
 }
