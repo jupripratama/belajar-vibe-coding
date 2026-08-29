@@ -40,4 +40,30 @@ export const usersRoute = new Elysia({ prefix: "/api/users" })
       tags: ["Users"],
       summary: "Login user",
     },
+  })
+  .get("/current", async ({ headers, set }) => {
+    try {
+      const authHeader = headers["authorization"];
+      const token = authHeader?.startsWith("Bearer ")
+        ? authHeader.slice(7).trim()
+        : authHeader?.trim();
+
+      if (!token) {
+        set.status = 401;
+        return { error: "Unauthorized" };
+      }
+
+      const user = await UserService.getCurrentUser(token);
+      set.status = 200;
+      return user;
+    } catch (err: any) {
+      set.status = 401;
+      return { error: "Unauthorized" };
+    }
+  }, {
+    detail: {
+      tags: ["Users"],
+      summary: "Get current logged-in user",
+      security: [{ BearerAuth: [] }],
+    },
   });

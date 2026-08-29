@@ -61,4 +61,40 @@ export const UserService = {
     // 7. Return token
     return token;
   },
+
+  async getCurrentUser(token: string) {
+    // 1. Cari session berdasarkan token
+    const sessionResult = await db
+      .select()
+      .from(sessions)
+      .where(eq(sessions.token, token))
+      .limit(1);
+
+    // 2. Jika session tidak ditemukan
+    if (sessionResult.length === 0) {
+      throw new Error("Unauthorized");
+    }
+
+    const session = sessionResult[0];
+
+    // 3. Cari user berdasarkan userId dari session
+    const userResult = await db
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        createdAt: users.createdAt,
+      })
+      .from(users)
+      .where(eq(users.id, session.userId))
+      .limit(1);
+
+    // 4. Jika user tidak ditemukan
+    if (userResult.length === 0) {
+      throw new Error("Unauthorized");
+    }
+
+    // 5. Return data user (tanpa password)
+    return userResult[0];
+  },
 };
