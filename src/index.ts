@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
-import { userRoutes } from "./modules/users/routes";
+import { usersRoute } from "./routes/users-route";
 
 const port = Number(process.env.PORT) || 3000;
 
@@ -23,7 +23,7 @@ const app = new Elysia()
     status: "online",
     timestamp: new Date().toISOString(),
   }))
-  .use(userRoutes)
+  .use(usersRoute)
   .listen(port);
 
 console.log(

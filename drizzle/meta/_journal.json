@@ -8,6 +8,13 @@
       "when": 1787975719155,
       "tag": "0000_dapper_sprite",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1788004302366,
+      "tag": "0001_add_password_remove_updated_at",
+      "breakpoints": true
     }
   ]
 }
