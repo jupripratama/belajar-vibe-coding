@@ -21,4 +21,23 @@ export const usersRoute = new Elysia({ prefix: "/api/users" })
       tags: ["Users"],
       summary: "Register a new user",
     },
+  })
+  .post("/login", async ({ body, set }) => {
+    try {
+      const token = await UserService.loginUser(body.email, body.password);
+      set.status = 200;
+      return { data: token };
+    } catch (err: any) {
+      set.status = 400;
+      return { error: err.message || "email atau password salah" };
+    }
+  }, {
+    body: t.Object({
+      email: t.String(),
+      password: t.String(),
+    }),
+    detail: {
+      tags: ["Users"],
+      summary: "Login user",
+    },
   });
